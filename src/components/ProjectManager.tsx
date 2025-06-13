@@ -184,12 +184,17 @@ const ProjectManager = () => {
     }
 
     try {
+      setLoading(true);
+      setError(null);
+
+      // Versión mejorada: usar un filtro más específico
       const { error } = await supabase
         .from('projects')
         .update({ checked: false })
-        .neq('id', ''); // Actualizar todos los registros
+        .not('id', 'is', null); // Actualizar todos los registros que tengan id (todos)
 
       if (error) {
+        console.error('Supabase error:', error);
         throw error;
       }
 
@@ -197,9 +202,14 @@ const ProjectManager = () => {
       setProjects(prev => 
         prev.map(project => ({ ...project, checked: false }))
       );
+
+      console.log('Marcas reseteadas exitosamente');
+
     } catch (err) {
       console.error('Error resetting all checks:', err);
-      setError('Error al resetear las marcas');
+      setError(`Error al resetear las marcas: ${err.message || 'Error desconocido'}`);
+    } finally {
+      setLoading(false);
     }
   };
 

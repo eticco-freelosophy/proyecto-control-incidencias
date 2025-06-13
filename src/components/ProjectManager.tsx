@@ -390,9 +390,9 @@ const ProjectManager = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-5">
-      <div className="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-sm">
-        <h1 className="text-3xl font-bold text-slate-700 text-center mb-6">
+    <div className="min-h-screen bg-gray-50 p-2 sm:p-5">
+      <div className="max-w-7xl mx-auto bg-white p-3 sm:p-6 rounded-lg shadow-sm">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-700 text-center mb-4 sm:mb-6">
           Lista de Proyectos - Santi
         </h1>
         
@@ -408,50 +408,54 @@ const ProjectManager = () => {
           </div>
         )}
         
-        <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg mb-6">
-          <div className="font-semibold">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 p-4 bg-gray-50 rounded-lg mb-6">
+          <div className="font-semibold order-2 lg:order-1">
             Última actualización: {lastUpdate ? formatDate(lastUpdate) : 'No hay actualización reciente'}
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-2 order-1 lg:order-2">
             <button
               onClick={() => setShowAddForm(true)}
               disabled={loading}
-              className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 bg-green-500 text-white px-3 py-2 rounded-md hover:bg-green-600 transition-colors disabled:opacity-50 text-sm"
             >
-              <Plus size={16} />
-              Nuevo Proyecto
+              <Plus size={14} />
+              <span className="hidden sm:inline">Nuevo Proyecto</span>
+              <span className="sm:hidden">Nuevo</span>
             </button>
             <button
               onClick={updateLastUpdate}
               disabled={loading}
-              className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 text-sm"
             >
-              <RefreshCw size={16} />
-              Actualizar fecha
+              <RefreshCw size={14} />
+              <span className="hidden sm:inline">Actualizar fecha</span>
+              <span className="sm:hidden">Actualizar</span>
             </button>
             <button
               onClick={resetLastUpdate}
               disabled={loading}
-              className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 transition-colors disabled:opacity-50 text-sm"
             >
-              <X size={16} />
-              Resetear fecha
+              <X size={14} />
+              <span className="hidden sm:inline">Resetear fecha</span>
+              <span className="sm:hidden">Reset fecha</span>
             </button>
             <button
               onClick={resetAllChecks}
               disabled={loading}
-              className="flex items-center gap-2 bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 bg-orange-500 text-white px-3 py-2 rounded-md hover:bg-orange-600 transition-colors disabled:opacity-50 text-sm"
             >
-              <RotateCcw size={16} />
-              Resetear marcas
+              <RotateCcw size={14} />
+              <span className="hidden sm:inline">Resetear marcas</span>
+              <span className="sm:hidden">Reset marcas</span>
             </button>
           </div>
         </div>
 
         {showAddForm && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6 mb-6">
             <h3 className="text-lg font-semibold mb-4">Añadir Nuevo Proyecto</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   ID del Proyecto
@@ -461,7 +465,7 @@ const ProjectManager = () => {
                   value={newProject.project_id}
                   onChange={(e) => setNewProject(prev => ({ ...prev, project_id: e.target.value }))}
                   placeholder="ej: 0270"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               </div>
               <div>
@@ -471,7 +475,7 @@ const ProjectManager = () => {
                 <select
                   value={newProject.type}
                   onChange={(e) => setNewProject(prev => ({ ...prev, type: e.target.value as ProjectType }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 >
                   <option value="ODO">ODO</option>
                   <option value="ALF">ALF</option>
@@ -480,7 +484,7 @@ const ProjectManager = () => {
                   <option value="ETI">ETI</option>
                 </select>
               </div>
-              <div>
+              <div className="sm:col-span-2 lg:col-span-1">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Nombre del Proyecto
                 </label>
@@ -489,24 +493,24 @@ const ProjectManager = () => {
                   value={newProject.name}
                   onChange={(e) => setNewProject(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="ej: MI NUEVO PROYECTO"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               </div>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <button
                 onClick={addNewProject}
                 disabled={loading}
-                className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors disabled:opacity-50 text-sm"
               >
-                <Save size={16} />
+                <Save size={14} />
                 Guardar Proyecto
               </button>
               <button
                 onClick={cancelAddProject}
-                className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors text-sm"
               >
-                <X size={16} />
+                <X size={14} />
                 Cancelar
               </button>
             </div>
@@ -514,9 +518,9 @@ const ProjectManager = () => {
         )}
 
         {editingProject && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 sm:p-6 mb-6">
             <h3 className="text-lg font-semibold mb-4">Editar Proyecto</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   ID del Proyecto
@@ -525,7 +529,7 @@ const ProjectManager = () => {
                   type="text"
                   value={editingProject.project_id}
                   onChange={(e) => setEditingProject(prev => prev ? { ...prev, project_id: e.target.value } : null)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm"
                 />
               </div>
               <div>
@@ -535,7 +539,7 @@ const ProjectManager = () => {
                 <select
                   value={editingProject.type}
                   onChange={(e) => setEditingProject(prev => prev ? { ...prev, type: e.target.value as ProjectType } : null)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm"
                 >
                   <option value="ODO">ODO</option>
                   <option value="ALF">ALF</option>
@@ -544,7 +548,7 @@ const ProjectManager = () => {
                   <option value="ETI">ETI</option>
                 </select>
               </div>
-              <div>
+              <div className="sm:col-span-2 lg:col-span-1">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Nombre del Proyecto
                 </label>
@@ -552,24 +556,24 @@ const ProjectManager = () => {
                   type="text"
                   value={editingProject.name}
                   onChange={(e) => setEditingProject(prev => prev ? { ...prev, name: e.target.value } : null)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm"
                 />
               </div>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <button
                 onClick={saveEdit}
                 disabled={loading}
-                className="flex items-center gap-2 bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition-colors disabled:opacity-50 text-sm"
               >
-                <Save size={16} />
+                <Save size={14} />
                 Guardar Cambios
               </button>
               <button
                 onClick={cancelEdit}
-                className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors text-sm"
               >
-                <X size={16} />
+                <X size={14} />
                 Cancelar
               </button>
             </div>
@@ -592,7 +596,7 @@ const ProjectManager = () => {
             <button
               key={type}
               onClick={() => setActiveFilter(type)}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                 activeFilter === type
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
